@@ -53,7 +53,11 @@ public class Cliente2 {
 				String[] lista = respostaServ.split(";");
                     for (String s : lista) {
                         if (s != null) {
-                            System.out.println(s);
+                            System.out.println("------------------------------------------------------------------------------------------");
+							System.out.print("|  ");
+                            System.out.print(s);
+							System.out.println();
+							System.out.println("------------------------------------------------------------------------------------------");
                         }
                     }
                     System.out.println();
