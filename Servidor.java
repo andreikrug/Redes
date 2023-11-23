@@ -13,7 +13,7 @@ class Servidor {
             Socket socketConexao = socketRecepcao.accept();
             // Inicia uma nova thread para tratar a conexão
             new Thread(new ClienteHandler(socketConexao, tarefas)).start();
-            
+
         }
     }
 }
@@ -21,7 +21,6 @@ class Servidor {
 class ClienteHandler implements Runnable {
     private Socket socketConexao;
     private ArrayList<String> tarefas;
-  
 
     public ClienteHandler(Socket socketConexao, ArrayList<String> tarefas) {
         this.socketConexao = socketConexao;
@@ -33,20 +32,25 @@ class ClienteHandler implements Runnable {
         try {
             BufferedReader doCliente = new BufferedReader(new InputStreamReader(socketConexao.getInputStream()));
             DataOutputStream paraCliente = new DataOutputStream(socketConexao.getOutputStream());
-
-            paraCliente.writeBytes("1) Adicionar item na lista;2) Mostrar lista;3) Remover item da lista;4) Marcar concluida;5) Para atribuir tecnico;0) Sair da aplicacao" + '\n');
+            
+            /////////////// Mostra opcoes /////////////////////////////
+            paraCliente.writeBytes(
+                    "1) Adicionar item na lista;2) Mostrar lista;3) Remover item da lista;4) Marcar concluida;5) Para atribuir tecnico;0) Sair da aplicacao"
+                            + '\n');
 
             String resposta = doCliente.readLine();
-
+            
+            /////////////// Adicionar nova tarefa /////////////////////////////
             if (resposta.equalsIgnoreCase("1")) {
                 doCliente = new BufferedReader(new InputStreamReader(socketConexao.getInputStream()));
                 paraCliente = new DataOutputStream(socketConexao.getOutputStream());
                 paraCliente.writeBytes("Digite a nova tarefa:" + '\n');
                 resposta = doCliente.readLine();
-
+                
                 tarefas.add(resposta);
-                paraCliente.writeBytes(tarefas.get(tarefas.size() - 1) + " foi adicionada a lista"+'\n');
+                paraCliente.writeBytes(tarefas.get(tarefas.size() - 1) + " foi adicionada a lista" + '\n');
 
+                /////////////// Mostrar lista /////////////////////////////
             } else if (resposta.equalsIgnoreCase("2")) {
                 doCliente = new BufferedReader(new InputStreamReader(socketConexao.getInputStream()));
                 paraCliente = new DataOutputStream(socketConexao.getOutputStream());
@@ -57,7 +61,8 @@ class ClienteHandler implements Runnable {
                 }
 
                 paraCliente.writeBytes(itens + '\n');
-
+            
+                /////////////// Remover tarefa /////////////////////////////
             } else if (resposta.equalsIgnoreCase("3")) {
                 doCliente = new BufferedReader(new InputStreamReader(socketConexao.getInputStream()));
                 paraCliente = new DataOutputStream(socketConexao.getOutputStream());
@@ -76,12 +81,14 @@ class ClienteHandler implements Runnable {
                 tarefas.remove(index - 1);
 
                 paraCliente.writeBytes("A tarefa: " + tarefaRemovida + " foi removida" + '\n');
-            } else if(resposta.equalsIgnoreCase("4")){
+
+                /////////////// Status para concluida /////////////////////////////
+            } else if (resposta.equalsIgnoreCase("4")) {
 
                 doCliente = new BufferedReader(new InputStreamReader(socketConexao.getInputStream()));
                 paraCliente = new DataOutputStream(socketConexao.getOutputStream());
                 paraCliente.writeBytes("Digite o numero da tarefa para ser marcada como concluida:" + '\n');
-                 String itens = "";
+                String itens = "";
                 for (int i = 0; i < tarefas.size(); i++) {
                     itens += (i + 1) + ". " + tarefas.get(i) + ";";
                 }
@@ -91,10 +98,10 @@ class ClienteHandler implements Runnable {
 
                 int index = Integer.valueOf(resposta);
 
-                tarefas.set(index -1, tarefas.get(index -1) + "  ||||| Status: Concluida  |||||");
+                tarefas.set(index - 1, tarefas.get(index - 1) + "  ||||| Status: Concluida  |||||");
 
-            } else if(resposta.equalsIgnoreCase("5"))
-            {
+                /////////////// Atribuir técnico /////////////////////////////
+            } else if (resposta.equalsIgnoreCase("5")) {
                 // para atribuir o nome na tarefa
                 doCliente = new BufferedReader(new InputStreamReader(socketConexao.getInputStream()));
                 paraCliente = new DataOutputStream(socketConexao.getOutputStream());
@@ -112,11 +119,7 @@ class ClienteHandler implements Runnable {
                 paraCliente = new DataOutputStream(socketConexao.getOutputStream());
                 paraCliente.writeBytes("Digite o nome para ser atribuido:" + '\n');
                 resposta = doCliente.readLine();
-                if(tarefas.get(index-1).contains("---"))
-                {
-
-                }
-                tarefas.set(index -1, tarefas.get(index -1) + " ||||| Tecnico: "+ resposta + " ||||");
+                tarefas.set(index - 1, tarefas.get(index - 1) + " ||||| Tecnico: " + resposta + " ||||");
             }
 
             // Fecha a conexão após a comunicação

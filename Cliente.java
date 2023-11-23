@@ -9,7 +9,6 @@ public class Cliente {
 		while (flag) {
 			String entrada;
 			String respostaServ;
-			
 
 			BufferedReader doUsuario = new BufferedReader(new InputStreamReader(System.in));
 			Socket socketCliente = new Socket("127.0.0.1", 6789);
@@ -19,12 +18,12 @@ public class Cliente {
 			respostaServ = doServidor.readLine();
 
 			String[] x = respostaServ.split(";");
-                for (String s : x) {
-                    if (s != null) {
-                        System.out.println(s);
-                    }
-                }
-                System.out.println();
+			for (String s : x) {
+				if (s != null) {
+					System.out.println(s);
+				}
+			}
+			System.out.println();
 
 			/////////////// Escolha de opcao /////////////////////////////
 
@@ -46,42 +45,43 @@ public class Cliente {
 
 				//////////////////////////////////////////////////////////////////////////////////////////
 
-
 				/////////////// Mostrar lista /////////////////////////////
 			} else if (entrada.equalsIgnoreCase("2")) {
 				doServidor = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
 				respostaServ = doServidor.readLine();
 
 				String[] lista = respostaServ.split(";");
-                    for (String s : lista) {
-                        if (s != null) {
-							System.out.println("------------------------------------------------------------------------------------------");
-							System.out.print("|  ");
-                            System.out.print(s);
-							System.out.println();
-							System.out.println("------------------------------------------------------------------------------------------");
-                        }
-                    }
-                    System.out.println();
-			//////////////////////////////////////////////////////////////////////////////////////////
+				for (String s : lista) {
+					if (s != null) {
+						System.out.println(
+								"------------------------------------------------------------------------------------------");
+						System.out.print("|  ");
+						System.out.print(s);
+						System.out.println();
+						System.out.println(
+								"------------------------------------------------------------------------------------------");
+					}
+				}
+				System.out.println();
+				
+				//////////////////////////////////////////////////////////////////////////////////////////
 
-
-			/////////////// Remover Item /////////////////////////////
-			}else if (entrada.equalsIgnoreCase("3")){
+				/////////////// Remover Item /////////////////////////////
+			} else if (entrada.equalsIgnoreCase("3")) {
 				doServidor = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
 				respostaServ = doServidor.readLine();
 				System.out.println(respostaServ);
 
 				doServidor = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
 				respostaServ = doServidor.readLine();
-				
+
 				String[] lista = respostaServ.split(";");
-                    for (String s : lista) {
-                        if (s != null) {
-                            System.out.println(s);
-                        }
-                    }
-                    System.out.println();
+				for (String s : lista) {
+					if (s != null) {
+						System.out.println(s);
+					}
+				}
+				System.out.println();
 
 				entrada = doUsuario.readLine();
 				paraServidor.writeBytes(entrada + '\n');
@@ -89,60 +89,61 @@ public class Cliente {
 				doServidor = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
 				respostaServ = doServidor.readLine();
 				System.out.println(respostaServ);
-			//////////////////////////////////////////////////////////////////////////////////////////
 
-			}else if (entrada.equalsIgnoreCase("0")){
+				//////////////////////////////////////////////////////////////////////////////////////////
+				/////////////// Atribuir classificação de concluida /////////////////////////////
+			} else if (entrada.equalsIgnoreCase("4")) {
+				doServidor = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
+				respostaServ = doServidor.readLine();
+				System.out.println(respostaServ);
+
+				doServidor = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
+				respostaServ = doServidor.readLine();
+
+				String[] lista = respostaServ.split(";");
+				for (String s : lista) {
+					if (s != null) {
+						System.out.println(s);
+					}
+				}
+				System.out.println();
+
+				entrada = doUsuario.readLine();
+				paraServidor.writeBytes(entrada + '\n');
+
+				/////////////// Atribuir técnico /////////////////////////////
+			} else if (entrada.equalsIgnoreCase("5")) {
+				doServidor = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
+				respostaServ = doServidor.readLine();
+				System.out.println(respostaServ);
+
+				doServidor = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
+				respostaServ = doServidor.readLine();
+
+				String[] lista = respostaServ.split(";");
+				for (String s : lista) {
+					if (s != null) {
+						System.out.println(s);
+					}
+				}
+				System.out.println();
+
+				entrada = doUsuario.readLine();
+				paraServidor.writeBytes(entrada + '\n');
+
+				doServidor = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
+				respostaServ = doServidor.readLine();
+				System.out.println(respostaServ);
+				entrada = doUsuario.readLine();
+				paraServidor.writeBytes(entrada + '\n');
+
+				/////////////// Finaliza /////////////////////////////
+			}  else {
 				flag = false;
-			} else if(entrada.equalsIgnoreCase("4")){
-				doServidor = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
-				respostaServ = doServidor.readLine();
-				System.out.println(respostaServ);
-
-				doServidor = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
-				respostaServ = doServidor.readLine();
-				
-				String[] lista = respostaServ.split(";");
-                    for (String s : lista) {
-                        if (s != null) {
-                            System.out.println(s);
-                        }
-                    }
-                    System.out.println();
-
-				entrada = doUsuario.readLine();
-				paraServidor.writeBytes(entrada + '\n');
-
-			} else if(entrada.equalsIgnoreCase("5")){
-				doServidor = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
-				respostaServ = doServidor.readLine();
-				System.out.println(respostaServ);
-
-				doServidor = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
-				respostaServ = doServidor.readLine();
-
-				
-				String[] lista = respostaServ.split(";");
-                    for (String s : lista) {
-                        if (s != null) {
-                            System.out.println(s);
-                        }
-                    }
-                    System.out.println();
-
-				entrada = doUsuario.readLine();
-				paraServidor.writeBytes(entrada + '\n');
-
-				doServidor = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
-				respostaServ = doServidor.readLine();
-				System.out.println(respostaServ);
-				entrada = doUsuario.readLine();
-				paraServidor.writeBytes(entrada + '\n');
-
 			}
 
 			socketCliente.close();
 
-		
+		}
 	}
-}
 }
